@@ -1,0 +1,93 @@
+Pozitie;Limbaj;Tehnologie;Framework;Vechime;Salariu
+Full-Stack Developer;Java;JavaScript;Angular;2;5500
+Full-Stack Developer;Java;Git;React;5;7400
+Full-Stack Developer;JavaScript;TypeScript;Angular;10;10000
+Full-Stack Developer;Java;TypeScript;Spring;16;12000
+Front End Developer;HTML;Git;Node.js;2;5000
+Front End Developer;C++;Docker;Angular;4;6300
+Front End Developer;Python;JSON;Flask;6;8000
+Front End Developer;CSS;AJAX;React;20;13000
+Back End Developer;Python;Git;Django;3;5700
+Back End Developer;Ruby;Git;Ruby on Rails;7;6780
+Back End Developer;Java;JSON;Angular;10;9647
+Back End Developer;C#;AJAX;ASP.NET;15;10345
+.Net Developer;C#;Git;.NET;1;5700
+.Net Developer;VB.NET;TypeScript;.NET Core;6;7000
+.Net Developer;C#;TypeScript;ASP.NET;9;9045
+.Net Developer;VB.NET;JSON;ASP.NET;19;12459
+PHP Developer;PHP;PostgresSQL;Laravel;2;5400
+PHP Developer;PHP;MySQL;Symfony;5;7500
+PHP Developer;PHP;PostgresSQL;Laravel;10;10000
+PHP Developer;PHP;API-uri;Symfony;21;17000
+DevOps;Kotlin;PostgresSQL;CALMS;2;5700
+DevOps;Swift;Docker;DORA;6;8198
+DevOps;C#;Git;DORA;10;17000
+DevOps;JavaScript;MySQL;CALMS;14;19000
+Data Analyst;Python;PostgresSQL;Data Collection;12;10000
+Data Analyst;R;Docker;Data Transformation;2;5697
+Data Analyst;Python;Git;Data Cleaning;5;7823
+Data Analyst;R;Docker;Modeling;9;8899
+IOS Developer;Swift;Xcode;SwiftUI;3;6000
+IOS Developer;Objective-C;Git;UIKit;7;8567
+IOS Developer;Swift;Xcode;SwiftUI;10;10456
+IOS Developer;Swift;Xcode;SwiftUI;20;12773
+Android Developer;Java;MySQL;RxJava;1;5000
+Android Developer;Kotlin;Git;Dagger;5;6349
+Android Developer;Java;Git;Android Jetpack;12;9000
+Android Developer;Kotlin;MySQL;Retrofit;23;12980
+Database Administrator;SQL;MySQL;MySQL Workbench;3;6400
+Database Administrator;SQL;PostgresSQL;pgAdmin;7;7890
+Database Administrator;SQL;Oracle Database;Cloud Database Services;11;13000
+Database Administrator;SQL;PostgresSQL;pgAdmin;17;15000
+Machine Learning Engineer;Python;Docker;PyTorch;3;6183
+Machine Learning Engineer;Python;CUDA;TensorFlow;5;8143
+Machine Learning Engineer;Python;Docker;Scikit-learn;11;10000
+Machine Learning Engineer;Python;CUDA;TensorFlow;17;14000
+Desktop developer;C#;Windows Forms;Qt;4;5800
+Desktop developer;Java;Electron;JavaFX;8;8530
+Desktop developer;C++;Entity Framework;Windows Presentation Foundation;11;11234
+Desktop developer;C#;Entity Framework;Qt;19;13945
+Game developer;C++;Adobe;DirectX;1;5109
+Game developer;C#;Blender;OpenGL;6;7111
+Game developer;Lua;Adobe;Vulkan;10;10000
+Game developer;Lua;Blender;DirectX;15;12000
+Software Tester;Python;OWASP Zap;Selenium;4;5000
+Software Tester;Java;Espresso;Appium;8;7546
+Software Tester;Java;Espresso;Appium;11;10345
+Software Tester;Python;OWASP Zap;Selenium;15;12876
+Web developer;CSS;PostgresSQL;Angular;3;5000
+Web developer;JavaScript;Azure;Node.js;5;6298
+Web developer;HTML;PostgresSQL;React;10;9999
+Web developer;JavaScript;MySQL;Angular;14;11864
+Java Developer;Java;Spring Cloud;Hibernate;2;5864
+Java Developer;Java;Azure;Spring;6;7812
+Java Developer;Java;Spring REST;Spring Boot;12;11983
+Java Developer;Java;SOAP;Hibernate;16;13678
+Information Security Analyst;Python;PostgresSQL;Wireshark;4;5355
+Information Security Analyst;Bash;Docker;Metasploit;6;7120
+Information Security Analyst;Bash;MySQL;Wireshark;9;9786
+Information Security Analyst;Python;Docker;Nmap;15;12955
+IT Manager;Bash;PostgresSQL;Django;1;4900
+IT Manager;JavaScript;JIRA;Angular;5;7890
+IT Manager;SQL;Git;Laravel;10;10234
+IT Manager;Bash;JIRA;Django;13;11000
+Computer Hardware Engineer;Verilog;JIRA;BIOS;2;5500
+Computer Hardware Engineer;C;Git;OpenCL;4;6400
+Computer Hardware Engineer;C++;Docker;Matlab;10;10456
+Computer Hardware Engineer;VHDL;JIRA;OpenCL;12;11825
+Computer Systems Analyst;Java;API-uri;;3;6812
+Computer Systems Analyst;Python;Git;Flask;7;8510
+Computer Systems Analyst;SQL;API-uri;;11;11898
+Computer Systems Analyst;Python;Git;Flask;20;14965
+Computer Network Architect;Python;VPN;Ansible;4;5600
+Computer Network Architect;Bash;Git;Wireshark;7;6500
+Computer Network Architect;Python;VPN;Nagios;11;11000
+Computer Network Architect;Bash;Git;Wireshark;16;12876
+Python Developer;Python;PostgresSQL;Flask;3;5699
+Python Developer;Python;Git;TensorFlow;6;7204
+Python Developer;Python;API-uri;Django;10;10344
+Python Developer;Python;PostgresSQL;PyTorch;15;13066
+Product Manager;HTML;Trello;Scrum;4;5890
+Product Manager;CSS;JIRA;Scrum;7;7540
+Product Manager;SQL;PostgresSQL;Laravel;9;8945
+Product Manager;SQL;MySQL;Scrum;12;10345

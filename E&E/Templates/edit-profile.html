@@ -1,0 +1,977 @@
+{% extends "base.html" %}
+{% block title %}Home{%endblock%}
+{% block custom_css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='edit-profile.css') }}">
+{% endblock %}
+{% block content%}
+
+
+<section id="profile">
+    <h2>Settings</h2>
+   <div class="section-container">
+    <div class="picture-container">
+        <div class="image">
+            {% if picture_url %}
+            <img src={{picture_url}} alt="Profile Picture" id="profile-picture" />
+            <input type="file" id="picture-input" style="display: none;" onchange="uploadNewPicture()" />
+            {% else %}
+            <img src="{{ url_for('static', filename='person.png') }}" alt="Profile Picture" id="profile-picture" />
+            <!-- Hidden file input for updating the picture -->
+            <input type="file" id="picture-input" style="display: none;" onchange="uploadNewPicture()" />
+            {% endif %}
+        </div>
+    </div>
+    
+        
+        <div class="profile-text">
+            <h2>{{user_info['first_name']}} {{user_info['last_name']}}</h2>
+        </div>
+        
+    </div> <hr class="solid"><br>
+    <div class="basic-info-container">
+        <h3>Basic Info</h3>
+
+        <label for="first_name">First Name:</label>
+        <input type="text" id="first_name" name="first_name" value="{{ user_info['first_name'] }}"><br>
+
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="last_name" name="last_name" value="{{ user_info['last_name'] }}"><br>
+
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country" value="{{ user_info['country'] }}"><br>
+
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" value="{{ user_info['city'] }}"><br>
+
+        <label for="cv">Upload CV (PDF):</label>
+        <input type="file" id="cv" name="cv" accept=".pdf"><br>
+        {%if cv%}
+        <span id="cv_info">{{ cv }}</span><br>
+        {%endif%}
+
+    </div>
+</div> 
+
+
+
+
+</section>
+<section id="about">
+    <h2>About Me</h2>
+    <h3>Description</h3>
+    <textarea id="description" name="description" rows="4" cols="100">
+        {% if user_desc %}
+            {{ user_desc.description }}
+        {% else %}
+            Nothing here yet
+        {% endif %}
+    </textarea><br>
+
+<h3>Education</h3>
+
+<div class="education-list">
+  {% if user_ed %}
+  <h3 class = "title-education">Your Education</h3>
+                {% for education_item in user_ed %}
+                <div class="education-items">
+                    <p class="education-item">{{ education_item.school_name }}</p>
+                    <p class="education-item">{{ education_item.degree_name }}</p>
+                    <p class="education-item">{{ education_item.start }} - {{ education_item.end }}</p>
+                    <img src="./static/delete.png" class = "delete" alt="Description of Icon" onclick="delete_ed_db(this, '{{ education_item.school_name }}', '{{ education_item.degree_name }}');deleteItem(this, 'education-items', 'education-list', 'title-education')">
+                  </div>
+
+                
+                {% endfor %}
+            {% endif %}
+        </div>
+
+            <button class="add-education-button" onclick="showEducationForm()">Add education</button>
+
+            <div id="add-education-form">
+                <label for="institutionName">Institution Name:</label><br>
+                <input type="text" id="institutionName" name="institutionName"><br>
+                
+                <label for="degree">Degree:</label><br>
+                <input type="text" id="degree" name="degree"><br>
+                
+                <label for="startYear">Start Year:</label><br>
+                <input type="text" id="startYear" name="startYear"><br>
+                
+                <label for="endYear">End Year:</label><br>
+                <input type="text" id="endYear" name="endYear"><br>
+                
+                <button onclick="add_ed_db(this);saveEducationInfo()">Save</button>
+            </div>
+
+</section>
+<section id ="experience">
+    <h3>My experience</h3>
+    
+    {% if user_ex %}
+    <h3 class = "title-experience">Your Work Experience</h3>
+    <div class="experience-list">
+    {% for exp in user_ex %}
+      <div class="experience-item">
+        <div class="exp-details">
+        <h4>{{ exp.position }} at {{ exp.company }}</h4>
+        <p>{{ exp.start }} - {% if exp.end %}{{ exp.end }}{% else %}Present{% endif %}</p>
+        <img src="./static/delete.png" class = "delete" alt="Description of Icon" onclick="delete_ex_db(this, '{{ exp.company }}', '{{ exp.position }}');deleteItem(this, 'experience-item', 'experience-list', 'title-experience');">
+       
+    </div>
+    
+    </div>
+    {% endfor %}
+  </div>
+  {%else%}
+  <div class="experience-list"></div>
+{% endif %}
+
+<button class = "add-experience-button" onclick="addWork()">Add Work Experience</button>
+
+<div id="add-experience-container" >
+    <label for="jobTitle">Job Title:</label><br>
+    <input type="text" id="jobTitle" name="jobTitle"><br>
+
+    <label for="companyName">Company Name:</label><br>
+    <input type="text" id="companyName" name="companyName"><br>
+
+    <label for="startYear">Start Year:</label><br>
+    <input type="number" id="startYear" name="startYear"><br>
+
+    <label for="endYear">End Year:</label><br>
+    <input type="number" id="endYear" name="endYear"><br>
+    <button id="saveExperienceButton" onclick="add_ex_db(this); addWorkExperience(); ">Save</button>
+</div>
+
+</section>
+
+<section id = "skills">
+    <h3>My skills</h3>
+
+    {% if user_skills %}
+    <h3 class = "title-skill">Your Work Experience</h3>
+    <div class="skill-list">
+        
+          {% for skill in user_skills %}
+          <div class="skill-item" data-skill-id="{{ skill.skill_id }}">
+
+            <h3>{{ skill.skill_name }}</h3>
+            <p class="skill">{{ skill.skill_level}}</p>
+            <img src="./static/delete.png" class = "delete" alt="Description of Icon" onclick="delete_skill_db(this, '{{ skill.skill_name }}');deleteItem(this, 'skill-item', 'skill-list', 'title-skill')">
+        </div>
+    
+        {%endfor%}
+    </div>
+    {%else%}
+    <div class="skill-list"></div>
+        {%endif%}
+
+    
+
+            <div class="add-education">
+                
+                <div class="select-container">
+                
+                <div class="wrapper">
+                <button onclick="showAdd(); " class = "skillz">Add Skills</button>
+                <div class="select-btn">
+                <span>Select Skill</span>
+                    <i class="fa-solid fa-angle-down"></i>
+                </div>
+                <div class="content">
+                    <div class="search">
+                        <i class="fa-solid fa-magnifying-glass fa-xs" style="color: #b3b3b3;"></i>
+                        <input id="inp" type="text" placeholder="Search">
+                    </div>
+                    <ul class="options">
+                        {% for skill in skills%}
+                        <li onclick="updateName(this)">{{skill.skill_name}}</li>
+                        {%endfor%}
+                        
+                    </ul>
+                    
+                </div>
+               
+                </div>
+                <button type="submit" class = "add-button" onclick="add_New_Skill();addNewSkill()">Add Skill</button>
+            </div>
+
+            <div class="squares-container">
+                <div class="square-title">Level: </div>
+                <div class="squares">
+                <div class="square first" id="square1" data-level="beginner"></div>
+                <div class="square middle" id = "square2" data-level="intermediate"></div>
+                <div class="square last" id = "square3" data-level="advanced"></div>
+            </div>
+
+            </div>
+
+</section>
+<section id="contact">
+    <h3>External Links</h3>
+
+    {%if github%}
+
+    <div>
+        <label for="github">GitHub Username:</label>
+        <input type="text" id="github" name="github" placeholder="{{ github }}">
+    </div>
+
+    {%else%}
+    <div>
+        <label for="github">GitHub Username:</label>
+        <input type="text" id="github" name="github" placeholder="Username or https://github.com/username">
+    </div>
+
+    {%endif%}
+    <!-- LinkedIn Profile Field -->
+
+    {%if linkedin%}
+    <div>
+        <label for="linkedin">LinkedIn Profile URL:</label>
+        <input type="url" id="linkedin" name="linkedin" placeholder="{{ linkedin }}">
+    </div>
+
+    {%else%}
+    <div>
+        <label for="linkedin">LinkedIn Profile URL:</label>
+        <input type="url" id="linkedin" name="linkedin" placeholder="https://www.linkedin.com/in/username">
+    </div>
+    {%endif%}
+
+    <button onclick="submitInfo()" class="external-button">Save</button>
+</section>
+
+
+
+<script>
+
+
+
+
+
+document.getElementById('profile-picture').onclick = function() {
+    document.getElementById('picture-input').click();
+};
+
+function uploadNewPicture() {
+    // Get the file input element and the file
+    var fileInput = document.getElementById('picture-input');
+    var fileInput = document.getElementById('picture-input');
+    var file = fileInput.files[0]; // Get the first selected file
+
+    // Create a FormData object and append the file
+    var formData = new FormData();
+    formData.append('file', file);
+
+    // Send a POST request to the server with the file
+    fetch('/upload', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle success
+        if(data.success) {
+            console.log(data['url'])
+            new_url = data['url']
+            const newURL = `/${new_url}`;
+            // Update the profile picture src with the new picture URL
+            document.getElementById('profile-picture').src = newURL;
+        } else {
+            // Handle error
+            alert('An error occurred while uploading the picture.');
+        }
+    })
+    .catch(error => {
+        // Handle network errors
+        console.error('Error:', error);
+        alert('An error occurred while uploading the picture.');
+    });
+}
+
+
+
+function submitInfo(){
+    var formData = new FormData();
+
+    formData.append('first_name', $("#first_name").val());
+    formData.append('last_name', $("#last_name").val());
+    formData.append('email', $("#email").val());
+    formData.append('country', $("#country").val());
+    formData.append('city', $("#city").val());
+    formData.append('github', $("#github").val()); // Assuming you have this input in your form
+    formData.append('linkedin', $("#linkedin").val()); // Assuming you have this input in your form
+    formData.append('description', $("#description").val()); // Assuming you have this input in your form
+    formData.append('cv', $('#cv')[0].files[0]); // Append the file
+
+    $.ajax({
+        type: "POST", // Change to POST because file upload requires POST
+        url: "/submit_data",  // The Flask endpoint
+        data: formData,
+        processData: false, // Important: tell jQuery not to process the data
+        contentType: false, // Important: tell jQuery not to set contentType
+        success: function(response){
+            console.log(response);
+        },
+        error: function(error){
+            console.log(error);
+        }
+    });
+}
+
+
+
+
+
+function add_ex_db(addButtonElement) {
+    // Prepare the payload with the company name, position, start year, and end year
+    
+
+    var container = document.querySelector('#add-experience-container');
+var jobTitleInput = container.querySelector('input[name="jobTitle"]');
+var companyNameInput = document.getElementById("companyName");
+var startYearInput = container.querySelector('input[name="startYear"]');
+var endYearInput = container.querySelector('input[name="endYear"]');
+
+console.log(jobTitleInput.value);
+console.log(companyNameInput.value);
+console.log(startYearInput.value);
+console.log(endYearInput.value);
+
+
+    
+    var payload = {
+        company: companyNameInput.value,
+        position: jobTitleInput.value,
+        startYear: startYearInput.value,
+        endYear: endYearInput.value,
+        // Add user_id from the session if needed
+        // user_id: userSessionId
+    };
+
+    // Send the POST request to the server
+    fetch('/add-experience', {  // Ensure this endpoint matches your server's API
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+        // Include credentials if your endpoint requires authentication
+        credentials: 'same-origin'
+    })
+    .then(response => {
+        // Check if the response was ok
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Success:', data);
+        // Optionally, add the experience item to the DOM
+        addItem(addButtonElement, 'experience-item', 'experience-list', 'title-experience', data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+
+function add_New_Skill() {
+    var skillNameElement = document.querySelector('.select-btn span');
+    var skillLevelElement = document.querySelector('.squares .active');
+    
+    if (!skillNameElement || !skillLevelElement) {
+        console.error('Skill name or skill level not selected.');
+return; // Exit the function if no skill is selected or if no level is active.
+}
+var skillName = skillNameElement.innerText.trim();
+var skillLevel = skillLevelElement.getAttribute('data-level');
+
+if (!skillName || !skillLevel) {
+    console.error('Skill name, level, or ID missing.');
+    return;  // Exit the function if data is missing.
+}
+
+var payload = {
+    skillName: skillName,
+    skill_level: skillLevel,
+    // user_id should be added here if it's stored in the session
+};
+
+// Send the POST request to the server
+fetch('/add-skill', {  
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+    credentials: 'same-origin'
+})
+.then(response => response.json())
+.then(data => {
+    if (data.success) {
+        console.log('Success:', data.message);
+        // Optionally, add the skill item to the DOM
+    } else {
+        console.error('Failed to add skill:', data.error);
+    }
+})
+.catch(error => {
+    console.error('Error:', error);
+});
+}
+
+
+
+
+
+
+
+
+
+
+function add_ed_db(addButtonElement) {
+    var container = document.querySelector('#add-education-form');
+    var schoolNameInput = container.querySelector('input[name="institutionName"]');
+    var degreeNameInput = container.querySelector('input[name="degree"]');
+    var startYearInput = container.querySelector('input[name="startYear"]');
+    var endYearInput = container.querySelector('input[name="endYear"]');
+
+    console.log(schoolNameInput.value);
+    console.log(degreeNameInput.value);
+    console.log(startYearInput.value);
+    console.log(endYearInput.value);
+
+    var payload = {
+        schoolName: schoolNameInput.value,
+        degreeName: degreeNameInput.value,
+        startYear: parseInt(startYearInput.value, 10),
+        endYear: parseInt(endYearInput.value, 10) 
+    };
+    // Send the POST request to the server
+fetch('/add-education', {  // Ensure this endpoint matches your server's API
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+    credentials: 'same-origin'
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    return response.json();
+})
+.then(data => {
+    console.log('Success:', data);
+    // Optionally, add the education item to the DOM or handle the success response
+})
+.catch((error) => {
+    console.error('Error:', error);
+});
+}
+
+
+function delete_ed_db(deleteButtonElement, schoolName, degreeName) {
+    console.log(schoolName, degreeName); // Logging the parameters for debugging
+    var payload = {
+        schoolName: schoolName,
+        degreeName: degreeName,
+        // user_id is obtained from the session on the server-side
+    };
+
+    // Send the DELETE request to the server
+    fetch('/delete-education', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+        credentials: 'same-origin'
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        // If delete was successful, remove the education item from the DOM
+        if (data.success) {
+            deleteButtonElement.closest('.education-items').remove();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+
+function delete_skill_db(deleteButtonElement, skillName) {
+    console.log(skillName); // Logging the skill name for debugging
+    var payload = {
+        skillName: skillName,
+        // user_id is obtained from the session on the server-side
+    };
+
+    // Send the DELETE request to the server
+    fetch('/delete-skill', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+        credentials: 'same-origin'
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        // If delete was successful, remove the skill item from the DOM
+        if (data.success) {
+            deleteButtonElement.closest('.skill-item').remove();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+
+
+
+function delete_ex_db(deleteButtonElement, company, position) {
+    console.log(company); // Correct variable name
+    var payload = {
+        company: company,
+        position: position,
+        // user_id is obtained from the session on the server-side
+    };
+
+    // Send the DELETE request to the server
+    fetch('/delete-experience', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+        credentials: 'same-origin'
+    })
+    .then(response => {
+        console.log(response)
+        // Handle response
+        // ...
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+
+
+function deleteSkill(deleteButtonElement) {
+    // Get the parent .skill-item div
+    var skillItemDiv = deleteButtonElement.closest('.skill-item');
+    
+    // Remove the .skill-item div from the DOM
+    skillItemDiv.remove();
+
+    var skillListDiv = document.querySelector('.skill-list');
+    var skilltitle = document.querySelector('.title-skill');
+    if (skillListDiv.children.length === 0) {
+        // If there are no skill items left, remove the entire skill-list div
+        skillListDiv.remove();
+        skilltitle.remove()
+    }
+}
+
+function deleteItem(deleteButtonElement, itemClass, listClass, titleClass) {
+    // Get the parent item div
+    var itemDiv = deleteButtonElement.closest('.' + itemClass);
+    
+    // Remove the item div from the DOM
+    if (itemDiv) {
+        itemDiv.remove();
+    }
+
+    // Get the list div and the title div
+    var listDiv = document.querySelector('.' + listClass);
+    var titleDiv = document.querySelector('.' + titleClass);
+
+    // Check if there are no more items left in the list
+    if (listDiv && listDiv.getElementsByClassName(itemClass).length === 0) {
+        // If there are no more items and the title exists, remove the title
+        if (titleDiv) {
+            titleDiv.remove();
+        }
+        // The listDiv is not removed, it stays even if it's empty
+    }
+}
+
+
+
+
+
+//dropdown
+const wrapper = document.querySelector(".wrapper"),
+selectBtn = wrapper.querySelector(".select-btn");
+options = wrapper.querySelector(".options")
+searchInp = wrapper.querySelector("#inp");
+
+selectBtn.addEventListener("click", () => {
+    wrapper.classList.toggle("active");
+});
+
+//array with skillz
+//let skills = ["Python", "Java", "C++", "Javascript", "HTML & CSS", "Typescript", "Flask", "React"]
+
+// function addSkill(){
+//     options.innerHTML = ""
+//     skills.forEach(skill => {
+//         console.log(skill)
+//         //this adds each skill inside li and inserts all li inside options tag
+//         let li = `<li onclick="updateName(this)">${skill}</li>`;
+//         options.insertAdjacentHTML("beforeend", li)
+// });
+// }
+
+//addSkill()
+
+function updateName(selectedLi) {
+    searchInp.value = "";
+    
+    console.log(selectedLi.innerText);
+    selectBtn.firstElementChild.innerText=selectedLi.innerText;
+    wrapper.classList.remove("active");
+}
+
+
+searchInp.addEventListener("keyup", () => {
+    let skillElements = Array.from(document.querySelectorAll(".options li"));
+
+// Extract the text content from the <li> elements and populate the skills array
+skillsArray = skillElements.map(skillElement => skillElement.textContent);
+console.log(skillsArray)
+    let arr = [];
+    let searchedVal = searchInp.value.toLowerCase();
+    console.log(searchedVal);
+    arr=skillsArray.filter(data => {
+        return data.toLowerCase().startsWith(searchedVal);
+    }).map(data => `<li onclick="updateName(this)">${data}</li>`).join("");
+    console.log(arr)
+    options.innerHTML = arr ? arr: `<p>Skill not found!</p>`;
+});
+
+
+
+
+var square1 = document.getElementById("square1")
+var square2 = document.getElementById("square2")
+var square3 = document.getElementById("square3")
+
+function handleSquareClick(click_square, level) {
+    // Add your logic here
+    console.log('Square clicked!');
+    document.querySelectorAll('.square').forEach(function(square){
+        square.classList.remove('active');
+    })
+    click_square.classList.add('active');
+    document.querySelector('.square-title').textContent = 'Level: ' + level;
+    console.log('Square clicked:', level);
+  }
+
+  document.querySelectorAll('.square').forEach(function(square) {
+    const level = square.getAttribute('data-level');
+      square.addEventListener('click',function(){
+        handleSquareClick(this, level)
+      });
+    });
+
+
+function showAdd() {
+    var div = document.getElementsByClassName('select-btn');
+    var button = document.getElementsByClassName("add-button");
+    var skillz = document.getElementsByClassName("skillz");
+    var squares = document.getElementsByClassName("squares-container");
+
+ console.log(div)
+ for (var i = 0; i < div.length; i++) {
+        var div = div[i];
+        div.style.display = 'block'; // Add your CSS here
+        // For example, to change the display property
+    }
+
+    for (var i = 0; i < button.length; i++) {
+        var button = button[i];
+        button.style.display = 'inline-block'; // Add your CSS here
+        // For example, to change the display property
+    }
+
+    for (var i = 0; i < skillz.length; i++) {
+        var skillz = skillz[i];
+        skillz.style.display = 'none'; // Add your CSS here
+        // For example, to change the display property
+    }
+
+    for (var i = 0; i < skillz.length; i++) {
+        var skillz = skillz[i];
+        skillz.style.display = 'none'; // Add your CSS here
+        // For example, to change the display property
+    }
+
+    for (var i = 0; i < squares.length; i++) {
+        var squares = squares[i];
+        squares.style.display = 'inline-block'; // Add your CSS here
+        // For example, to change the display property
+    }
+}
+
+
+function addSkillItem(skillName, skillLevel) {
+    const skillList = document.querySelector(".skill-list");
+
+    // Create a new skill item element
+    const skillItem = document.createElement("div");
+    skillItem.classList.add("skill-item");
+
+    // Create the elements for the skill item (e.g., h3, p, img)
+    const skillNameElement = document.createElement("h3");
+    skillNameElement.textContent = skillName;
+
+    const skillLevelElement = document.createElement("p");
+    skillLevelElement.classList.add("skill");
+    skillLevelElement.textContent = skillLevel;
+
+    const deleteButton = document.createElement("img");
+    deleteButton.src = "./static/delete.png";
+    deleteButton.classList.add("delete");
+    deleteButton.alt = "Description of Icon";
+    deleteButton.onclick = function() {
+        delete_skill_db(this, skillName)
+        deleteSkill(this);
+    };
+
+    // Append the elements to the skill item
+    skillItem.appendChild(skillNameElement);
+    skillItem.appendChild(skillLevelElement);
+    skillItem.appendChild(deleteButton);
+
+    // Append the skill item to the skill list
+    skillList.appendChild(skillItem);
+}
+
+
+
+function addNewSkill() {
+    var skillDisplay = document.querySelector('.select-btn span');
+    var squares = document.querySelectorAll(".square");
+
+    // Initialize a flag to check if any square is active
+    var isSquareActive = false;
+    var dataLevel = ""
+    squares.forEach(function(square) {
+        if (square.classList.contains("active")) {
+            dataLevel = square.getAttribute("data-level");
+            console.log("This square is active:", dataLevel);
+
+            // Set the flag to true since at least one square is active
+            isSquareActive = true;
+        }
+    });
+
+    if (!isSquareActive) {
+        alert("Select a skill level");
+    } else {
+        // A skill has been selected, proceed with the skill addition
+        console.log("Skill selected: ", skillDisplay.innerText.trim());
+        var skillName = skillDisplay.innerText.trim();
+
+        // Now you can call the addSkillItem function with the selected skillName
+        // and the appropriate dataLevel
+        addSkillItem(skillName, dataLevel);
+    }
+}
+
+
+function addWork(){
+
+    var info = document.getElementById("add-experience-container")
+    var button = document.getElementsByClassName("add-experience-button")
+
+    for (var i = 0; i < button.length; i++) {
+        var button = button[i];
+        button.style.display = 'none'; // Add your CSS here
+        // For example, to change the display property
+    }
+
+    info.style.display = 'inline-block'
+    console.log(info)
+}
+
+
+function areAllFieldsCompleted() {
+    // Get the form element by its ID
+    var info = document.getElementById('add-experience-container');
+
+    // Find all input elements within the form
+    var inputs = info.getElementsByTagName('input');
+
+    // Loop through the inputs and check if any are empty
+    for (var i = 0; i < inputs.length; i++) {
+        // If the input is empty, return false
+        if (inputs[i].value.trim() === '') {
+            return false;
+        }
+    }
+
+    // If none of the inputs are empty, return true
+    return true;
+}
+
+
+
+function areAllFieldsCompleted2() {
+    // Get the form element by its ID
+    var info = document.getElementById('add-education-form');
+
+    // Find all input elements within the form
+    var inputs = info.getElementsByTagName('input');
+
+    // Loop through the inputs and check if any are empty
+    for (var i = 0; i < inputs.length; i++) {
+        // If the input is empty, return false
+        if (inputs[i].value.trim() === '') {
+            return false;
+        }
+    }
+
+    // If none of the inputs are empty, return true
+    return true;
+}
+function addExperienceItem() {
+    var jobTitle = document.getElementById('jobTitle').value;
+    var companyName = document.getElementById('companyName').value;
+    var startYear = document.getElementById('startYear').value;
+    var endYear = document.getElementById('endYear').value ;  // Default to 'Present' if endYear is empty
+
+    // Create the new experience item
+    var experienceItem = document.createElement('div');
+    experienceItem.className = 'experience-item';
+    var expDetails = `
+        <div class="exp-details">
+            <h4>${jobTitle} at ${companyName}</h4>
+            <p>${startYear} - ${endYear}</p>
+            <img src="./static/delete.png" class = "delete" alt="Description of Icon" onclick="delete_ex_db(this,'${jobTitle}','${companyName}');deleteItem(this, 'experience-item', 'experience-list', 'title-experience')">
+        </div>
+    `;
+    experienceItem.innerHTML = expDetails;
+
+    // Get the .experience-list container
+    var experienceList = document.querySelector('.experience-list');
+
+    // Assuming the .experience-list is always in the DOM, as per the new structure
+    if (experienceList) {
+        // Insert the new experience item at the top of the experience list
+        experienceList.insertBefore(experienceItem, experienceList.firstChild);
+    } else {
+        console.error('The experience list does not exist in the DOM.');
+        return;
+    }
+
+    // Clear the form fields
+    document.getElementById('jobTitle').value = '';
+    document.getElementById('companyName').value = '';
+    document.getElementById('startYear').value = '';
+    document.getElementById('endYear').value = '';
+}
+
+
+
+function addWorkExperience() {
+
+    
+    if (areAllFieldsCompleted()) {
+        addExperienceItem()
+        // ...
+    } else {
+        // Not all fields are completed, handle accordingly
+        // Perhaps alert the user or highlight the empty fields
+        alert('Please complete all fields before saving.');
+    }
+}
+ 
+function showEducationForm(){
+    var button = document.getElementsByClassName("add-education-button")
+    var container = document.getElementById("add-education-form")
+
+    for (var i = 0; i < button.length; i++) {
+        var button = button[i];
+        button.style.display = 'none'; // Add your CSS here
+        // For example, to change the display property
+
+    }
+
+    container.style.display="inline-block"
+}
+
+
+function addEducationItem() {
+    // Get values from the inputs within the add-education-form container
+    var container = document.getElementById('add-education-form');
+    var institutionName = container.querySelector('#institutionName').value;
+    var degree = container.querySelector('#degree').value;
+    var startYear = container.querySelector('#startYear').value;
+    var endYear = container.querySelector('#endYear').value;
+
+    // Default to 'Present' if endYear is empty
+    if (endYear === '') {
+        endYear = 'Present';
+    }
+
+    // Create a new div element for the education item
+    var educationItem = document.createElement('div');
+    educationItem.className = 'education-items';
+
+    // Create the HTML content for the new education item
+    var eduDetails = `
+        <p class="education-item">${institutionName}</p>
+        <p class="education-item">${degree}</p>
+        <p class="education-item">${startYear} - ${endYear}</p>
+        <img src="./static/delete.png" class="delete" alt="Delete Icon" onclick="delete_ed_db(this, '${institutionName}', '${degree}');deleteItem(this, 'education-items', 'education-list', 'title-education')">
+    `;
+
+    // Set the innerHTML of the educationItem div
+    educationItem.innerHTML = eduDetails;
+
+    // Append the new education item to the education-list
+    var educationList = document.querySelector('.education-list');
+    educationList.appendChild(educationItem);
+
+    // Clear the form fields
+    container.querySelector('#institutionName').value = '';
+    container.querySelector('#degree').value = '';
+    container.querySelector('#startYear').value = '';
+    container.querySelector('#endYear').value = '';
+}
+
+
+
+
+
+function saveEducationInfo(){
+
+    
+    if (areAllFieldsCompleted2()) {
+        addEducationItem()
+        
+        // ...
+    } else {
+        // Not all fields are completed, handle accordingly
+        // Perhaps alert the user or highlight the empty fields
+        alert('Please complete all fields before saving.');
+    }
+}
+
+
+
+</script>
+
+
+{%endblock%}

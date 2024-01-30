@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}Home{%endblock%}
+{% block custom_css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}">
+{% endblock %}
+
+{% block content%}
+
+<div class="imagine">
+  <img src="{{ url_for('static', filename='tw3.png') }}" alt="Background Image">
+</div>
+<div class="login-container">
+    
+    <form class="form" id = "loginForm">
+        <div class="signin-container">
+            <p >Sign in</p>
+
+        </div>
+      <div class="input-container1">
+        <label class= "input-name"for="email">Email:</label>
+        <input type="text" name="email" id = "email" placeholder="Enter email" class="input" aria-label="Login" />
+        
+      </div>
+      <div class="input-container2">
+       <label class="input-name" for="pass">Password:</label>
+       <div class="password-container">
+        <input type="password" name="password" id="pass" placeholder="Enter password" class="input" aria-label="Sign up" />
+        <i class="fa-regular fa-eye" id="eyeIcon"></i>
+       </div>
+      </div>
+      <div class="checkbox-container">
+        <label class="check">
+          <input type="checkbox" checked="checked" name="remember"> Remember me
+        </label>
+    </div>
+        
+     
+        <button type="button" class="submit-button" onclick="submitForm()">
+          Login
+      </button>
+       <div class ="sign-up"> 
+        <p class="text-sign">Don't have an account?</p>
+    </div>
+    <a href="{{ url_for('signup_render_template') }}">Sign up</a>
+       
+    </form>
+</div>
+
+<div class="text-welcome">Sign in to keep track of the new members of the community</div>
+
+<script>
+
+function submitForm() {
+  var form = document.getElementById('loginForm');
+  var formData = new FormData(form);
+
+  fetch("/login", {
+    method: "POST",
+    body: formData,
+  })
+  .then(response => {
+    console.log("Full Response:", response);
+    return response.json();
+  })
+  .then(data => {
+    console.log("Data:", data);
+    // Check the 'success' property in the response JSON
+    if (data.success) {
+      
+      const userId = data.user_id
+      const userRole = data.user_role
+      console.log(userId)
+      if (userRole == 'recruiter') {
+        window.location.href = window.location.href = `/recruit`;
+      }
+      else {
+      window.location.href = window.location.href = `/redirect_to_profile/${userId}`;
+      }
+      // Do something on success
+    } 
+    else {
+      // an alert that informs the user the password is incorrect
+      alert("Incorrect password. Please try again.");
+
+
+    }
+  })
+  .catch(error => {
+    console.error("Error", error);
+  });
+};
+
+</script>
+
+
+{%endblock%}

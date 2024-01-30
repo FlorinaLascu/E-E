@@ -1,0 +1,259 @@
+
+
+.card {
+  
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  border: 1px solid grey;
+  border-radius: 1rem;
+  
+  max-width: 25vw;
+  height: 63vh;
+  margin: 0 auto;
+  animation: fade 250ms ease-in-out forwards;
+
+  margin-left: 60%;
+  margin-top: 4%;
+}
+
+
+
+.radio_btn {
+  display: flex;
+  gap: 10px;
+  color: #333;
+  background-color:white;
+  align-items: center;
+  margin-top: -10px;
+  margin-bottom: -10px;
+}
+
+.radio_btn > label {
+  display: flex;
+  align-items: center;  /* Align items vertically in the center */
+  margin-right: 10px; 
+  margin-top: 6px  /* Add some spacing between radio button and text */
+}
+
+.roletitle {
+  margin-bottom: 0;
+}
+
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: .7rem;
+  gap: .25em;
+  padding-left: 10%;
+  padding-right:10%;
+}
+
+.form-group1 {
+  display: flex;
+  margin-top: -30px;
+  flex-direction: column;
+  margin-bottom: .5rem;
+  gap: .25em;
+  padding-left: 10%;
+  padding-right:10%;
+}
+
+.form-group:last-child {
+  margin: 0;
+}
+
+.form-group > label {
+  
+  font-size: 1em;
+  color: #333;
+  margin-bottom: -1%;
+  margin-top: 2%;
+  text-align: center;
+}
+
+.form-group1 > label {
+  
+  font-size: 1em;
+  color: #333;
+  margin-bottom: -1%;
+  margin-top: 2%;
+  text-align: center;
+}
+
+
+.step-title {
+  margin: 0;
+  margin-bottom: 1rem;
+  margin-top: 2vh;
+  text-align: center;
+}
+
+.card.active {
+  animation: slide 250ms 125ms ease-in-out both;
+}
+
+.multi-step-form {
+  overflow: hidden;
+  position: relative;
+}
+
+.hide {
+  display: none;
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(50%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(.75);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+#pass {
+  position: relative;
+  display:flex;
+}
+#eyeIcon {
+  top:57%;
+  left: 83%;
+  cursor: pointer;
+  position: absolute;
+  color: #c1c2c2;
+
+}
+
+.fa-eye-slash {
+  position: absolute;
+  top:57%;
+  left: 83%;
+  cursor: pointer;
+  width: 10px;
+  height: 10px;
+  color: #c1c2c2;
+
+}
+
+
+#req1, #req2, #req3 {
+  
+  position: relative;
+  text-align: left;
+  color:red;
+  font-size: 13px;
+  
+
+}
+
+#req1 span,
+#req2 span,
+#req3 span {
+  margin-left: 5px;
+}
+
+input[type=text], input[type=email], input[type=password] {
+  height: 6vh;
+  border-radius: 0.7rem;
+  border: 1px solid rgb(201, 199, 199);
+  box-shadow: 2px 2px 5px #dfdede;
+  outline: none;
+  padding: 1rem;
+}
+
+.button-container1 {
+  
+  margin-top: auto;
+  padding-right:10%;
+  padding-bottom: 7%;
+  gap: 10px;
+}
+
+.button-container2 {
+  
+  margin-top: auto;
+  padding-right:10%;
+  padding-bottom: 7%;
+}
+
+
+.button-container1 >button{
+  
+  padding: 0.9vh 1.1vw;
+  font-size: 1em;
+  outline: 0;
+  float: right;
+  color: #000;
+  border-radius: 0.9rem;
+  border:0;
+  background: #fff;
+  margin-left: 10px;
+  transition: all 0.2s;
+  box-shadow: rgb(255, 198, 0) -2px -2px 0px 2px, rgb(241, 139, 195) 0px 0px 0px 4px, rgba(0, 0, 0, 0.05) 0px 0px 2px 7px;
+}
+
+.button-container1 >button:hover {
+  box-shadow: rgb(241, 139, 195) -2px -2px 0px 2px, rgb(255, 198, 0) 0px 0px 0px 4px, rgba(0, 0, 0, 0.05) 0px 0px 2px 7px;
+  transform: scale(1.01);
+}
+
+.checks {
+  position: relative;
+  padding-left: 10%;
+  padding-right:10%;
+}
+.title {
+  position: absolute;
+  top: 20%;
+  left: 15%;
+  color: white;
+  font-size: 4rem;
+}
+
+
+@keyframes pulsate {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+    filter: blur(1px);
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+    
+  }
+}
+
+.img {
+  position: absolute;
+  left: 13%;
+  top:20%
+}
+
+.imagine {
+  animation: pulsate 2s infinite;
+  
+}

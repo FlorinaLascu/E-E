@@ -1,0 +1,34 @@
+<div class="education-list">
+  {% if user_ed %}
+  <h3 class = "title-education">Your Education</h3>
+                {% for education_item in user_ed %}
+                <div class="education-items">
+                    <p class="education-item">{{ education_item.school_name }}</p>
+                    <p class="education-item">{{ education_item.degree_name }}</p>
+                    <p class="education-item">{{ education_item.start }} - {{ education_item.end }}</p>
+                    <img src="./static/delete.png" class = "delete" alt="Description of Icon" onclick="deleteItem(this, 'education-items', 'education-list', 'title-education')">
+                  </div>
+
+                </div>
+                {% endfor %}
+            {% endif %}
+
+            <button class="add-education-button" onclick="showEducationForm()">Add education</button>
+
+            <div id="add-education-form">
+                <label for="institutionName">Institution Name:</label>
+                <input type="text" id="institutionName" name="institutionName"><br>
+                
+                <label for="degree">Degree:</label>
+                <input type="text" id="degree" name="degree"><br>
+                
+                <label for="startYear">Start Year:</label>
+                <input type="text" id="startYear" name="startYear"><br>
+                
+                <label for="endYear">End Year:</label>
+                <input type="text" id="endYear" name="endYear"><br>
+                
+                <button onclick="saveEducationInfo()">Save</button>
+            </div>
+
+</section>

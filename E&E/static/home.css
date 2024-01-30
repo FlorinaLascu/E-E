@@ -1,0 +1,132 @@
+
+
+.body {
+  overflow-x: hidden;
+}
+
+.login-container{
+
+    width: 400px; /* Adjust the width as needed */
+  height: 500px; /* Adjust the height as needed */
+  background-color: #ffffff; /* Background color for the div */
+  position: absolute;
+  top: 25%; /* Move the top edge to the vertical center */
+  left: 50%; /* Move the left edge to the horizontal center */
+  transform: translate(-50%, -20%); /* Center the div both horizontally and vertically */
+  text-align: center;
+  display: flex;
+  justify-content: center; /* Horizontally center the input containers */
+  align-items: center; 
+  border-radius: 10px;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+
+}
+
+.text-welcome{
+  color:aliceblue;
+  position: absolute;
+  left:65%;
+  top:33%;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.sign-up{
+    position: relative;
+    top: 20px;
+}
+  
+.submit-button{
+    border-color: #ffffff;
+    border-radius: 0.7rem;
+    position: relative;
+    top: 5px;
+    cursor: pointer;
+    padding: 3%;
+
+    transition: transform 0.3s;
+    
+}
+
+.submit-button:hover{
+  transform: translateY(-5px);
+
+}
+
+.forgot{
+    position: relative;
+    top: 5px;
+}
+
+
+  input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 2px 0;
+  display: inline-block;
+  border: 1px solid #e2e2e2;
+  border-radius: 10px;
+  box-sizing: border-box;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+.checkbox-container {
+    position: relative;
+    display: flex;
+    top: 0px;
+    
+    /* Adjust the margin as needed */
+  }
+  
+  /* Style the "Remember me" checkbox */
+  
+  .imagine {
+    animation: pulsate 4s infinite;
+    margin-left: 2%;
+    width: 30px;
+    height: 30px;;
+  }
+  
+  .password-container {
+    position: relative;
+    display: flex;
+    top: 0px; 
+  }
+  
+  .fa-eye {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #c1c2c2;
+  }
+  
+  .fa-eye-slash {
+  
+      position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #c1c2c2;
+  
+  }
+  
+  .signin-container{
+      position: relative;
+      top: -5px; 
+      font-size: 35px;
+      
+      
+  }
+
+  
+  label.input-name {
+
+    bottom: 0px;
+}

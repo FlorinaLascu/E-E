@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% block title %}Sign Up{%endblock%}
+
+{% block custom_css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='profile.css') }}">
+{% endblock %}
+
+
+{% block content%}
+
+
+<section id="profile">
+    <div class="section__pic-container">
+
+        {% if picture%}
+        <img src={{picture}} alt="John Doe profile picture" />
+        {%else%}
+      <img src="./static/person.png" alt="John Doe profile picture" />
+
+      {%endif%}
+    </div>
+    <div class="section__text">
+      <p class="section__text__p1">Hello, I'm</p>
+      <h1 class="title">{{ user_info.first_name }} {{ user_info.last_name }}</h1>
+      <p class="section__text__p2">{{ user_info.city}}, {{ user_info.country }}</p>
+      <div class="btn-container">
+        <button
+          class="buton btn-color-2"
+          onclick="window.open('{{ cv }}')">
+          Download CV
+        </button>
+        <button class="buton btn-color-1" onclick="location.href='#contact'">
+          Contact Info
+        </button>
+
+        <button class="buton btn-color-2" onclick="location.href='/edit-profile'">Edit Profile
+        </button>
+
+      </div>
+      <div id="socials-container">
+        <img
+          src="./static/linkedin.png"
+          alt="My LinkedIn profile"
+          class="icon1"
+          onclick="location.href='{{ linkedin }}'"
+        />
+        <img
+          src="./static/github.png"
+          alt="My Github profile"
+          class="icon1"
+          onclick="location.href='{{ github }}'"
+        />
+      </div>
+    </div>
+  </section>
+
+<section id = "about">
+    <h1 class="about-me">About me</h1>
+    <div class="about-container">
+        <div class="description-container">
+           <h3 class="description-title">Description</h3>
+           <div class="description-text">
+
+            {% if user_desc %}
+                <p>{{user_desc.description}}</p>
+            {% else %}
+                <p>No description yet!</p>
+            {% endif %}
+           </div>
+        </div>
+        <div class="education-container">
+            <h3 class="education-subtitle">Education</h3>
+            
+            
+            
+            {% if user_ed %}
+                {% for education_item in user_ed %}
+                    <div class="education-items">
+                    <img src="./static/experience.png" alt="Experience Icon" class="icon1" />
+                    <p>{{ education_item.school_name }}</p>
+                    <p>{{ education_item.degree_name }}</p>
+                    <p>{{ education_item.start }} - {{ education_item.end }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Nothing here yet!</p>
+            {% endif %}
+
+            
+        </div>
+    </div>
+</section>
+
+<section id = "experience">
+
+            <div class="title-container">
+                <h1 class="exp">My Experience</h1>
+                <div class="align-detail-containers">
+
+
+            {% if user_ex %}
+                {% for user_exp in user_ex %}
+                <div class="details-container">
+                    <img src="./static/experience.png"
+                    alt = "Experience Icon" 
+                    class="icon1"
+                    />
+                    <p>{{user_exp.position}}</p>
+                    <p>{{user_exp.company}}</p>
+                    <p>{{user_exp.start}} - {{user_exp.end}}</p>
+                </div>
+                {%endfor%}
+            {%else%}
+            <div class="details-container">
+                <img src="./static/experience.png"
+                alt = "Experience Icon" 
+                class="icon1"
+                />
+                <p>No experience yet!</p>
+            </div>
+            {%endif%}
+
+            </div>
+            </div>
+
+            <div class="title-container">
+                <h1 class="exp">My Skills</h1>
+                <div class="article-container">
+                    {%if user_skills%}
+                        {% for skill in user_skills%}
+                            <article>
+                            <img src="./static/checkmark.png"
+                            alt = "Experience Icon" 
+                            class="icon2"/>
+                    
+                            <div class="elements">
+                            <h3>{{skill.skill_name}}</h3>
+                            <p>{{skill.skill_level}}</p>
+                            </div>
+                            </article>
+                        {%endfor%}
+                    {%else%}
+                    <article>
+                        <img src="./static/checkmark.png"
+                        alt = "Experience Icon" 
+                        class="icon2"/>
+                
+                        <div class="elements">
+                        <h3>No skills for now!</h3>
+                        
+                        </div>
+                        </article>
+                    {%endif%}
+
+                </div>
+            </div>
+    
+    
+</section>
+
+<section id = "contact">
+    
+    <h1 class="title">Contact me</h1>
+    <div class="contact-info-upper-container">
+        <div class="contact-info-container">
+            <img src="./static/mail.png"
+                    alt = "Experience Icon" 
+                    class="icon2"
+                    />
+            <p><a href="mailto:example@gmaol.com">{{user_info.email}}</a></p>
+        </div>
+        <div class="contact-info-container">
+            <img src="./static/linkedin.png"
+                    alt = "Experience Icon" 
+                    class="icon2"
+                    />
+            <p><a href="{{ linkedin }}">LinkedIn</a></p>
+        </div>
+    </div>
+</section>
+
+{%endblock%}
+

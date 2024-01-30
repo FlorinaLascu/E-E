@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+*{
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  background-image: url('office4.jpg');
+  background-size: cover; /* Adjusts the image to cover the entire background */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  
+}
+
+label.logo{
+    color: aliceblue;
+    font-size: 50px;
+    line-height: 80px;
+    padding: 0 50px;
+    font-weight: bold;
+    -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: rgb(66, 65, 65);
+}
+
+label.input-name {
+
+    padding-bottom: 5px;
+}
+
+nav {
+  overflow: hidden;
+  
+  height: 80px;
+  width: 100%;
+
+  z-index: 1;
+}
+
+
+nav ul {
+    float: right;
+    margin-right: 20px;
+}
+
+nav ul li {
+    display: inline-block;
+    line-height: 80px;
+    margin: 0 5px;
+}
+
+.icon {
+    width: 50px;
+    margin-top: 15px;
+}
+
+.login-container{
+
+    width: 400px; /* Adjust the width as needed */
+  height: 500px; /* Adjust the height as needed */
+  background-color: #ffffff; /* Background color for the div */
+  position: absolute;
+  top: 25%; /* Move the top edge to the vertical center */
+  left: 50%; /* Move the left edge to the horizontal center */
+  transform: translate(-50%, -20%); /* Center the div both horizontally and vertically */
+  text-align: center;
+  display: flex;
+  justify-content: center; /* Horizontally center the input containers */
+  align-items: center; 
+  border-radius: 10px;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+
+}
+
+
+
+  
+
+
+
+
+.sign-up{
+    position: relative;
+    top: 35px;
+}
+  
+.submit-button{
+    border-color: #ffffff;
+    border-radius: 5px;
+    position: relative;
+    top: 20px;
+    cursor: pointer;
+    
+}
+
+.forgot{
+    position: relative;
+    top: 0px;
+}
+
+  input[type="text"] {
+    padding: 5px;
+  }
+
+
+  input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #e2e2e2;
+  border-radius: 10px;
+  box-sizing: border-box;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+}
+
+  .footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #7d7d7d;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+/* Style the left and right sentences */
+.left-sentence {
+  float: left; /* Float to the left to position on the left corner */
+}
+
+.right-sentence {
+  float: right; /* Float to the right to position on the right corner */
+}
+.checkbox-container {
+  position: relative;
+  display: flex;
+  top: -20px;
+  
+  /* Adjust the margin as needed */
+}
+
+/* Style the "Remember me" checkbox */
+
+
+.password-container {
+  position: relative;
+  display: flex;
+  top: 0px; 
+}
+
+.fa-eye {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #c1c2c2;
+}
+
+.fa-eye-slash {
+
+    position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #c1c2c2;
+
+}
+
+.signin-container{
+    position: relative;
+    top: -50px; 
+    font-size: 35px;
+    
+    
+}
+.input-container1{
+
+    position: relative;
+    top: -30px; 
+
+}
+
+.input-container2{
+    position: relative;
+    top: -20px; 
+
+
+}
+
+
+
+
+</style>
+</head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<body>
+<div>
+<nav>
+    <label class="logo">E&E</label>
+  <ul>
+    
+  <li><a href="#news"><img src="home.png" alt="Home" class="icon"></a></li>
+  <li><a href="#contact"><img src="graph.png" alt="Graph" class="icon"></a></li>
+  <li><a href="#news"><img src="person.png" alt="Profile" class="icon"></a></li>
+</ul>
+</nav>
+
+<div class="login-container">
+    
+    <form class="form">
+        <div class="signin-container">
+            <p >Sign in</p>
+
+        </div>
+      <div class="input-container1">
+        <label class= "input-name"for="email">Email:</label>
+        <input type="text" id = "email" placeholder="Enter email" class="input" aria-label="Login" />
+        
+      </div>
+      <div class="input-container2">
+       <label class="input-name" for="pass">Password:</label>
+       <div class="password-container">
+        <input type="password" id="pass" placeholder="Enter password" class="input" aria-label="Sign up" />
+        <i class="fa-regular fa-eye" id="eyeIcon"></i>
+       </div>
+      </div>
+      <div class="checkbox-container">
+        <label class="check">
+          <input type="checkbox" checked="checked" name="remember"> Remember me
+        </label>
+    </div>
+        <p class="forgot">Forgot your password?</p>
+     
+      <button type="submit" class="submit-button">
+        <img src="lock1.png" alt="Submit Icon"></button>
+       <div class ="sign-up"> 
+        <p class="text-sign">Don't have an account?</p>
+        <p class = "text-sign">Sign up here</p>
+       </div>
+    </form>
+
+    
+</div>
+</div>
+
+<footer class="footer">
+    <p class="left-sentence">Connecting talent with opportunity, one E&E step at a time</p>
+    <p class="right-sentence">&copy; 2023 E&E. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

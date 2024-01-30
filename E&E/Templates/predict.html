@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Predict Page{% endblock %}
+
+{% block custom_css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='predict.css') }}">
+    <!-- Adăugați link-ul pentru stilizarea graficului Chart.js -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/chart.js">
+{% endblock %}
+
+{% block content %}
+<div class="container-predict">
+    <div class="casuta1">
+        <div class="predict-info">
+            <h2>Prediction</h2>
+            <div class="input-container">
+                <form class="form3">
+                    <div>
+                        <label for="profession">Profession:</label><br>
+                        <input type="text" id="profession" name="profession" placeholder="Enter your profession" required class="white-placeholder"><br><br>
+                    </div>
+
+                    <div>
+                        <label for="language">Favorite Language:</label><br>
+                        <input type="text" id="language" name="language" placeholder="Enter favorite language" required class="white-placeholder"><br><br>
+                    </div>
+
+                    <div>
+                        <label for="technology">Favorite Technology:</label><br>
+                        <input type="text" id="technology" name="technology" placeholder="Enter favorite technology" required class="white-placeholder"><br><br>
+                    </div>
+
+                    <div>
+                        <label for="framework">Favorite Framework:</label><br>
+                        <input type="text" id="framework" name="framework" placeholder="Enter favorite framework" required class="white-placeholder"><br><br>
+                    </div>
+
+                    <div>
+                        <label for="seniority">Seniority:</label><br>
+                        <input type="text" id="seniority" name="seniority" placeholder="Enter your seniority" required class="white-placeholder"><br><br>
+                    </div>
+
+                    <!-- Display the predicted salary here -->
+                    <div id="result">
+                        <button type="button" class="submit-btn" onclick="predictSalary()">
+                            <img src="{{ url_for('static', filename='grp.png') }}" alt="Submit Icon">
+                        </button>
+                    </div>
+
+                   
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="casuta2">
+        <div class="predict-text">
+            <img src="{{ url_for('static', filename='tw9.png') }}" class="poza-predictie" >
+            <p class="citat">Predict with E&E</p>
+            <p>Know your professional worth</p>    
+        </div>
+
+         <!-- Adăugați un container pentru grafic -->
+        
+    </div>
+    <div class="chart-container">
+        <canvas id="salaryChart"></canvas>
+    </div>
+</div>
+
+<!-- Includeți scriptul JavaScript Chart.js pentru a desena graficul -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='scriptPred.js') }}"></script>
+
+{% endblock %}

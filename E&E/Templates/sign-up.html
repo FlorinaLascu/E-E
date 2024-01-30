@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% block title %}Sign Up{% endblock %}
+
+{% block custom_css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='signup.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="title">Welcome to E&E</div>
+<div class="img"><img src="{{ url_for('static', filename='tw2.png') }}" class="imagine" /></div>
+<form data-multi-step class="multi-step-form" id="registerForm">
+    <div class="card" data-step>
+        <h3 class="step-title">This is step 1</h3>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required>
+        </div>
+
+        <div class="form-group" id="pass">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required oninput="checkPasswordRequirements()">
+            <span><i class="fa-regular fa-eye" id="eyeIcon"></i></span>
+        </div>
+
+        <div class="checks">
+            <div id="req1">
+                <i class="fa-regular fa-circle-check"></i><span>8 characters minimum</span>
+            </div>
+            <div id="req2">
+                <i class="fa-regular fa-circle-check"></i><span>One uppercase character</span>
+            </div>
+            <div id="req3">
+                <i class="fa-regular fa-circle-check"></i><span>One special character</span>
+            </div>
+        </div>
+        <div class="button-container1">
+            <button type="button" data-next id="nextButton">Next</button>
+        </div>
+    </div>
+
+    <div class="card" data-step>
+        <h3 class="step-title">This is step 2</h3>
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" name="firstName" id="firstName" oninput="checkStep2()">
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" name="lastName" id="lastName" oninput="checkStep2()">
+        </div>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" oninput="checkStep2()">
+        </div>
+        <div class="button-container1">
+            <button type="button" data-next id="nextButton2">Next</button>
+            <button type="button" data-previous>Previous</button>
+        </div>
+    </div>
+
+    <div class="card" data-step>
+        <h3 class="step-title">This is step 3</h3>
+        <div class="form-group">
+            <label for="country">Country</label>
+            <input type="text" name="country" id="country" oninput="checkStep3()">
+        </div>
+        <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" name="city" id="city" oninput="checkStep3()">
+        </div>
+
+        <div class="form-group">
+            <p class="roletitle">Role:</p>
+            <div class="radio_btn">
+                <input type="radio" id="option1" onclick="checkStep3()" name="group1" value="recruiter">
+                <label for="option1"><span>Recruiter</span></label>
+
+                <input type="radio" id="option2" name="group1" value="normal">
+                <label for="option2"><span>Employee</span></label>
+            </div>
+        </div>
+        <div class="button-container1">
+            <button type="button" onclick="register()" id="submitButton">Submit</button>
+            <button type="button" data-previous>Previous</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Function to check password requirements
+        function checkPasswordRequirements() {
+            var password = document.getElementById('password').value;
+            var minLength = password.length >= 8;
+            var upperCase = /[A-Z]/.test(password);
+            var specialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+            // Update UI for requirements
+            document.getElementById('req1').style.color = minLength ? 'green' : 'red';
+            document.getElementById('req2').style.color = upperCase ? 'green' : 'red';
+            document.getElementById('req3').style.color = specialChar ? 'green' : 'red';
+
+            // Enable or disable the Next button in Step 1
+            document.getElementById('nextButton').disabled = !(minLength && upperCase && specialChar);
+        }
+
+        // Function to check fields in Step 2
+        function checkStep2() {
+            var firstName = document.getElementById('firstName').value;
+            var lastName = document.getElementById('lastName').value;
+            var username = document.getElementById('username').value;
+
+            // Enable or disable the Next button in Step 2
+            document.getElementById('nextButton2').disabled = !(firstName && lastName && username);
+        }
+
+        // Function to check fields in Step 3
+        function checkStep3() {
+            var country = document.getElementById('country').value;
+            var city = document.getElementById('city').value;
+            var roleSelected = document.querySelector('input[name="group1"]:checked') !== null;
+
+            // Enable or disable the Submit button in Step 3
+            document.getElementById('submitButton').disabled = !(country && city && roleSelected);
+        }
+
+        // Event listener for password input
+        document.getElementById('password').addEventListener('input', checkPasswordRequirements);
+
+        // Event listeners for Step 2 fields
+        document.getElementById('firstName').addEventListener('input', checkStep2);
+        document.getElementById('lastName').addEventListener('input', checkStep2);
+        document.getElementById('username').addEventListener('input', checkStep2);
+
+        // Event listeners for Step 3 fields
+        document.getElementById('country').addEventListener('input', checkStep3);
+        document.getElementById('city').addEventListener('input', checkStep3);
+        document.getElementById('option1').addEventListener('click', checkStep3);
+        document.getElementById('option2').addEventListener('click', checkStep3);
+    });
+
+    
+</script>
+{% endblock %}

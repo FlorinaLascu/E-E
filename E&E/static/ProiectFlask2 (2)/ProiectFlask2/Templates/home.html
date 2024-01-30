@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Home{%endblock%}
+{% block custom_css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}">
+{% endblock %}
+
+{% block content%}
+<div class="login-container">
+    
+    <form class="form">
+        <div class="signin-container">
+            <p >Sign in</p>
+
+        </div>
+      <div class="input-container1">
+        <label class= "input-name"for="email">Email:</label>
+        <input type="text" id = "email" placeholder="Enter email" class="input" aria-label="Login" />
+        
+      </div>
+      <div class="input-container2">
+       <label class="input-name" for="pass">Password:</label>
+       <div class="password-container">
+        <input type="password" id="pass" placeholder="Enter password" class="input" aria-label="Sign up" />
+        <i class="fa-regular fa-eye" id="eyeIcon"></i>
+       </div>
+      </div>
+      <div class="checkbox-container">
+        <label class="check">
+          <input type="checkbox" checked="checked" name="remember"> Remember me
+        </label>
+    </div>
+        <p class="forgot">Forgot your password?</p>
+     
+      <button type="submit" class="submit-button">
+        <img src="{{url_for('static', filename='lock1.png')}}" alt="Submit Icon"></button>
+       <div class ="sign-up"> 
+        <p class="text-sign">Don't have an account?</p>
+    </div>
+    <a href="{{ url_for('signup') }}">Sign up here</a>
+       
+    </form>
+</div>
+
+{%endblock%}

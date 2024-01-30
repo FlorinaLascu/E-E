@@ -1,0 +1,291 @@
+{% extends "base.html" %}
+{% block title %}Sign Up{% endblock %}
+
+{% block custom_css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='recruit.css') }}">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <div class="search-container">
+        <h2>Looking for?</h2>
+        <div class="things">
+            <input type="text" id = "city-search" class="search-input" placeholder="Search...">
+            <button class="button" onclick="getUserId()"><i class="fa-solid fa-magnifying-glass" ></i></button>
+            <button class="filters" id="openModalButton">Filters</button>
+        </div>
+    </div>
+
+    <div class="employee-container">
+        {% for user in users %}
+        <div class="employee-card" data-user-id="{{ user.user_id }}" onclick="seeProfile(this)">
+            <img src="{{ url_for('static', filename='person.png') }}" class="circular-picture">
+            <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+            <!-- Add more employee info as needed -->
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <!-- Modal content goes here -->
+        <h3>FILTER</h3>
+
+        <div class="select-container">
+            <div class="wrapper">
+                
+                <div class="select-btn">
+                    <span>Select Skill</span>
+                    <i class="bx bx-chevron-down"></i>
+                </div>
+                <div class="content">
+                    <div class="search">
+                        <i class="bx bx-search bx-xs" style="color: #b3b3b3;"></i>
+                        <input id="inp" type="text" placeholder="Search">
+                    </div>
+                    <ul class="options">
+                        {% for skill in skills %}
+                        <li onclick="updateName(this)">{{ skill.skill_name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="apply" onclick="applyFilter()">Apply</button>
+    </div>
+</div>
+
+<!-- Bootstrap JS and Popper.js -->
+
+<script>
+
+
+function clearAndCreateCards(userData) {
+    // Get the container where the employee cards are displayed
+    const container = document.querySelector('.employee-container');
+    
+    // Clear the current employee cards
+    container.innerHTML = '';
+
+    // Iterate over the userData to create new cards
+    Object.keys(userData).forEach((userId) => {
+        const user = userData[userId];
+        console.log(user)
+
+        // Create the card element
+        const card = document.createElement('div');
+        card.className = 'employee-card';
+        card.setAttribute('data-user-id', userId);
+        card.onclick = function() { seeProfile(this); };
+
+        // Add the image
+        const img = document.createElement('img');
+        img.src = '{{ url_for("static", filename="person.png") }}';
+        img.className = 'circular-picture';
+        card.appendChild(img);
+
+        // Add the name
+        const name = document.createElement('h3');
+        name.textContent = `${user}`;
+        card.appendChild(name);
+
+        // Append the new card to the container
+        container.appendChild(card);
+    });
+}
+
+
+
+
+function applyFilter(){
+
+    const selectBtn = document.querySelector(".wrapper .select-btn");
+    console.log(selectBtn)
+    var text = selectBtn.firstElementChild.innerText 
+    user_ids = []
+    
+
+    if(text != "Select Skill"){
+        console.log(text)
+
+        var employeeCards = document.querySelectorAll('.employee-card');
+//var userId = card.getAttribute('data-user-id');
+
+    employeeCards.forEach(function(card) {
+    // Do something with divElement, e.g., manipulate its properties or contents
+        var userId = Number(card.getAttribute('data-user-id'));
+        user_ids.push(userId)
+        
+});    
+
+        var dataToSend = {
+                    skill: text,
+                    userIds: user_ids
+                };
+
+                fetch('/filter_by_skill', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataToSend)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        clearAndCreateCards(data)
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+
+    }
+
+    else{
+        alert("select a skill!")
+    }
+    
+    
+}
+
+
+
+
+
+
+    // Declare 'searchInp' and 'selectBtn' globally
+    const searchInp = document.querySelector("#inp");
+    const selectBtn = document.querySelector(".wrapper .select-btn");
+
+    // Event listener for the search input
+    searchInp.addEventListener("keyup", () => {
+        let skillsArray = JSON.parse('{{ skills | map(attribute="skill_name") | list | tojson | safe }}');
+
+        let searchedVal = searchInp.value.toLowerCase();
+        let arr = skillsArray.filter(data => data.toLowerCase().startsWith(searchedVal))
+                             .map(data => `<li onclick="updateName(this)">${data}</li>`)
+                             .join("");
+        const options = document.querySelector(".options");
+        options.innerHTML = arr ? arr : `<p>Skill not found!</p>`;
+    });
+
+    // Event listener for the select button
+    selectBtn.addEventListener("click", () => {
+        const wrapper = document.querySelector(".wrapper");
+        wrapper.classList.toggle("active");
+    });
+
+    // Function to update skill list
+    function updateSkillList(skillsArray) {
+        const options = document.querySelector(".options");
+        options.innerHTML = "";
+        skillsArray.forEach(skill => {
+            let li = `<li onclick="updateName(this)">${skill}</li>`;
+            options.insertAdjacentHTML("beforeend", li);
+        });
+    }
+
+    // Function to update the name when a skill is selected
+    function updateName(selectedLi) {
+        searchInp.value = "";
+        selectBtn.firstElementChild.innerText = selectedLi.innerText;
+        const wrapper = document.querySelector(".wrapper");
+        wrapper.classList.remove("active");
+    }
+
+    // Modal-related functions and event listeners
+    var modal = document.getElementById('myModal'),
+        btn = document.getElementById('openModalButton');
+
+    btn.onclick = function() {
+        modal.style.display = 'block';
+    };
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    };
+
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+
+    // Initialize select picker once the document is ready
+    $(document).ready(function () {
+        $('.selectpicker').selectpicker();
+    });
+
+    // Function to see a user profile
+    function seeProfile(card) {
+        var userId = card.dataset.userId;
+        fetch(`/profile?user_id=${userId}`, {
+            method: 'GET'
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.href = `/redirect_to_profile/${userId}`;
+            } else {
+                console.error('Failed to fetch user profile');
+            }
+        });
+    }
+
+    function getUserId() {
+
+
+var userIds = [];
+
+var inputElement = document.getElementById('city-search');
+
+    // Get the value of the input element
+    var inputValue = inputElement.value;
+    
+if(inputValue){
+    var employeeCards = document.querySelectorAll('.employee-card');
+//var userId = card.getAttribute('data-user-id');
+
+    employeeCards.forEach(function(card) {
+    // Do something with divElement, e.g., manipulate its properties or contents
+        var userId = Number(card.getAttribute('data-user-id'));
+        userIds.push(userId)
+        
+
+});
+
+    var dataToSend = {
+            city: inputValue,
+            userIds: userIds
+        };
+
+        fetch('/search_by_city', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataToSend)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        console.log(data)
+        clearAndCreateCards(data)
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+
+
+
+console.log(userIds)
+}
+else {
+    alert("Type in a city")
+}
+}
+</script>
+
+{% endblock %}

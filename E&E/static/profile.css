@@ -1,0 +1,315 @@
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+nav li {
+    /* Styles for the anchor tags within list items */
+    text-decoration: none; /* Removes underline from links */
+    color: #d82121; /* Sets the text color for links */
+    text-decoration: none;
+    text-decoration-color: white;
+    transition: all 300ms ease;
+}
+
+nav li a {
+    transition: all 300ms ease;
+    
+}
+
+/*desktop nav*/
+
+#user-info, .nav-items {
+    display: flex;
+}
+
+#user-info {
+    justify-content: space-around;
+    align-items: center;
+    height: 17vh;
+    background-color: antiquewhite;
+}
+
+
+
+
+.nav-items {
+    gap: 2rem;
+    list-style: none;
+    font-size: 1.5rem;
+}
+
+.nav-items li:hover{
+    color: aqua;
+    text-decoration: underline;
+    text-underline-offset: 0.5rem;
+    text-decoration-color: grey;
+}
+.name {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.name:hover{
+    cursor: default;
+}
+
+
+
+
+section {
+    padding-top: 4vh;
+    
+    box-sizing: border-box;
+    min-height: fit-content;
+    background-color: white;
+    margin: 0 10rem;
+}
+
+.section-container {
+    display:flex;
+}
+
+#profile {
+    display: flex;
+    justify-content: center;
+    gap: 5rem;
+    height: 75vh;
+    margin-top: 8vh;
+    border-top-right-radius: 2rem;
+    border-top-left-radius: 2rem;
+    
+}
+
+.section__pic-container {
+    display: flex;
+    height: 350px;
+    width: 350px;
+    margin: auto 0;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 2vh
+}
+
+.section__text {
+    align-self: center;
+    text-align: center;
+}
+
+.section__text__pl {
+    font-weight: 600;
+}
+
+p {
+    color: rgb(85, 85, 85);
+  }
+  
+  /* TRANSITION */
+  
+
+  
+
+  .section__text p {
+    font-weight: 600;
+  }
+  
+  .section__text__p1 {
+    text-align: center;
+  }
+  
+  .section__text__p2 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+  }
+  
+
+  .title {
+    font-size: 3rem;
+    text-align: center;
+  }
+  
+  #socials-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    gap: 1rem;
+  }
+
+  .icon1 {
+    cursor: pointer;
+    height: 2rem;
+  }
+
+
+  .btn-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .buton {
+    font-weight: 600;
+    border: 0.1rem solid grey;
+    transition: all 300ms ease;
+    padding: 0.5rem;
+    width:8rem;
+    border-radius: 2rem;
+  }
+
+  .btn-color-1,
+  .btn-color-2:hover {
+    background: rgb(53, 53, 53);
+    color: white;
+  }
+  
+  .btn-color-1:hover {
+    background: rgb(0, 0, 0);
+  }
+  
+  .btn-color-2 {
+    background: none;
+  }
+  
+  .btn-color-2:hover {
+    border: rgb(255, 255, 255) 0.1rem solid;
+  }
+  
+  #experience{
+    
+    display: flex;;
+    justify-content: center;
+    padding: 3rem;
+    gap: 2rem;
+
+  }
+
+  .details-container {
+    display: flex;
+    
+    gap: 2rem;
+    justify-content: center;
+    
+  }
+  .exp {
+    text-align: center;
+  }
+
+  .align-detail-containers {
+    padding:2rem;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid grey;
+    gap:1rem;
+    border-radius: 1rem;
+  }
+
+  .article-container {
+    border:1px solid grey;
+    display: flex;
+    text-align: initial;
+    flex-wrap: wrap;
+    gap: 2vh;
+    flex-direction: row;
+    max-width: 400px;
+    justify-content: center;
+    padding: 2rem;
+    border-radius: 1rem;
+    
+  }
+
+  article {
+    display: flex;
+    width: 9rem;
+    
+    gap: 0.2rem;
+  }
+
+  .elements {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .icon2 {
+    width: 20%;
+    height: 30%;
+    margin-top: 4%;
+    
+  }
+
+  #about {
+    
+    padding: 4vh;
+    
+    display: flex;
+    flex-direction: column;
+  }
+
+ 
+
+  .description-title{
+    justify-content: flex-start;
+  }
+
+  .description-container {
+    display: flex;
+    flex-direction: column;
+    order: 2;
+  }
+
+  .education-items {
+    display: flex;
+    gap: 2vh
+  }
+
+  .education-container {
+    border: 1px solid grey;
+    padding: 1em;
+    border-radius: 1em;
+  }
+
+  .about-me{
+    text-align: center;
+    font-size: 3vw;
+  }
+
+  #contact {
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 50vh;
+    margin-bottom: 10vh;
+    padding: 2vh;
+    border-bottom-left-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+   
+  }
+
+  .contact-info-upper-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid grey;
+    width: 30%;
+    border-radius: 1rem;
+    
+   
+  
+  }
+
+  .contact-info-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    
+    
+  }
+
+  .contact-info-container p{
+    font-size: larger;
+    margin-top: 3vh;
+  }

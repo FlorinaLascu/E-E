@@ -1,0 +1,275 @@
+
+.main-container {
+  padding-left: 15px 9%;
+  padding-left: 1vw;
+  padding-bottom: 10%;
+}
+
+.employee-container{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));/*google this*/
+  gap: 15px;
+  padding-right: 1vw;
+  
+}
+
+.search-container{
+ 
+  color: aliceblue;
+  padding-bottom: 2vw;
+}
+
+.things {
+  display: flex;
+
+}
+
+.things > .filters {
+  padding: 5px 13px 8px 13px;
+  border: solid 1px grey;
+  border-radius: 0.7em;
+  margin-left: 1%;
+}
+
+
+@media screen and (max-width: 600px){
+  .things{
+    gap: 5px;
+  }
+}
+
+.employee-card {
+  
+  background-color: white;
+  box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  border-radius: 0.7em;
+  text-align: center;
+  padding: 40px 40px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  
+}
+.employee-card:hover {
+  transform: scale(1.02); /* Enlarge the image by 10% on hover */
+}
+
+.circular-picture {
+  border-radius: 50%;
+  overflow: hidden;
+  width: 25%; /* Adjust the width as needed */
+  height: auto; /* Adjust the height as needed */
+padding-bottom: 2%;}
+
+
+.search-container form{
+  display: flex;
+  
+}
+
+.button {
+  height: 2.5em;
+  width: 2.5em;
+  border: 1px grey;
+  border-top-right-radius: 0.7em;
+  border-bottom-right-radius: 0.7em;
+  transition: background-color 0.3s;
+  background-color: rgb(146, 103, 165);
+  outline:none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.search-input {
+  padding-left: 1vw;
+  border: 1px grey solid;
+  border-right: none;
+  border-top-left-radius: 0.7em;
+  border-bottom-left-radius:0.7em;
+  outline: none;
+}
+
+
+.button:hover {
+  background-color: bisque;
+}
+
+@media screen and (max-width: 600px) {
+  .button {
+    margin-left: 0; /* Remove the margin for smaller screens */
+  }
+}
+
+
+/*modal*/
+
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 40%;
+  height: 70%;
+ 
+    max-width: 600px; 
+}
+
+/* Close button styles */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-content .apply {
+  width:  5vw;
+  margin-left: 0; /* Push the button to the right */
+  margin-top: 2%;
+    display: block;
+    border: none ;
+    border-radius: 0.5em;
+    padding-top: 6px;
+    padding-bottom: 7px;
+    background-color: rgb(70, 172, 100);
+    color: aliceblue;
+    box-shadow: 1px 1px 2px gray;
+}
+
+@media screen and (max-width: 600px) {
+  .modal-content .apply{
+    width:  13vw; /* Remove the margin for smaller screens */
+    padding-top: 4px;
+    padding-bottom: 5px;
+  }
+}
+
+/*dropdown*/
+
+.wrapper {
+  width: 60%
+}
+
+.select-btn {
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 3%;
+  padding-bottom: 3%;
+  padding-left: 4%;
+  padding-right: 4%;
+  border-radius: 7px;
+  align-items: center;
+  border: solid 1px rgb(168, 168, 168);
+  cursor:pointer;
+}
+
+.select-btn i{
+  font-size: 10px;
+  padding-top: 4px;
+  transform: 0.5s linear;
+}
+
+.content {
+  display: none;
+  border-radius: 7px;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid rgb(168, 168, 168);
+  height: 50%;
+}
+
+
+.wrapper.active .select-btn i{
+  transform: rotate(-180deg);
+}
+
+.wrapper.active .content{
+  display: block;
+}
+
+.search i{
+  position:absolute;
+  line-height: 35px;
+
+  left: 3%;
+}
+
+.content .search{
+  position: relative;
+  display: flex;
+  
+}
+
+.search input{
+  border-radius: 7px;
+  border: 1px solid rgb(168, 168, 168);
+  color: black;
+  height: 35px;
+  padding: 0 15px 0 30px; /*why tf does this work*/
+  outline: none;
+  width: 100%;
+
+}
+
+@media screen and (max-width: 600px) {
+  .wrapper{
+    width: 100%
+  }
+}
+
+.options{
+  margin-top: 3%;
+  max-height: 78%;
+  overflow-y: auto;
+  padding-right: 2%;
+}
+
+.options li{
+  height: 25px;
+  padding: 0 10px;
+  border-radius: 5px;
+  font-size: 17px;
+}
+
+.options li:hover{
+  background: rgb(241, 247, 250);
+}
+
+/*this makes the scrollbar cute*/
+.options::-webkit-scrollbar{
+  width:7px;
+}
+
+.options::-webkit-scrollbar-track{
+  background: #f1f1f1;
+  border-radius: 25px;
+}
+
+
+.options::-webkit-scrollbar-thumb{
+  background: #ccc;
+  border-radius: 25px;
+}
+
+
+
+
+
